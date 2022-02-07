@@ -6,6 +6,8 @@ import { Alerta } from '../components/Alerta';
 
 export const Registro = () => {
 
+    const navigate = useNavigate()
+
     const nuevoRegistro = Yup.object().shape({
         firstName: Yup.string()
                     .min(3, 'El Nombre es muy corto')
@@ -24,7 +26,18 @@ export const Registro = () => {
     })
 
     const handleSubmit = (valores) => {
-        console.log('Formilario...', valores);
+    
+        const url = 'http://localhost:3001/api/admin'
+        
+        axios.post(url, valores)
+        .then(response => {
+            console.log(response.data.message);
+            navigate('/dashboard')
+        })
+        .catch(error => {
+            console.log(error);
+        })
+       
     }
 
     return (
@@ -37,8 +50,9 @@ export const Registro = () => {
                     email: '',
                     password: ''
                 }}
-                onSubmit={ (values) => {
+                onSubmit={ (values, {resetForm}) => {
                     handleSubmit(values);
+                    resetForm();
                 }}
                 validationSchema={nuevoRegistro}
             >
