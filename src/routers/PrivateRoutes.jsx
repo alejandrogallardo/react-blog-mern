@@ -1,14 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { LayoutPrivate } from '../layout/LayoutPrivate';
 import { Inicio } from '../pages/Inicio';
-import { MainPage } from '../pages/MainPage';
+// import { MainPage } from '../pages/MainPage';
 import { Nosotros } from '../pages/Nosotros';
-export const PrivateRoutes = () => {
+
+export const PrivateRoutes = ({isAuthenticated}) => {
     return (
-        <Routes>
-            <Route element={ <MainPage />}>
+        /*<Routes>
+            { false ?
+            (<Route element={ <MainPage />}>
                 <Route index element={ <Inicio /> } />
                 <Route path="nosotros" element={ <Nosotros /> } />
-            </Route>
-        </Routes>
+            </Route>)
+            : <Navigate to="/login" />}
+        </Routes>*/
+        <Route element={ <LayoutPrivate /> }>
+            <Route index element={ <Inicio /> } />
+            <Route path="nosotros" element={ <Nosotros /> } />
+        </Route>        
     );
 };

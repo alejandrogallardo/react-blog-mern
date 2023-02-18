@@ -1,8 +1,9 @@
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import axios from 'axios';
+// import axios from 'axios';
 import { Alerta } from '../components/Alerta';
+import clienteAxios from '../config/ClienteAxios';
 
 export const Registro = () => {
 
@@ -25,8 +26,9 @@ export const Registro = () => {
         
     })
 
-    const handleSubmit = (valores) => {
+    const handleSubmit = async (valores) => {
     
+        /*
         const url = 'http://localhost:3001/api/admin'
         
         axios.post(url, valores)
@@ -35,8 +37,16 @@ export const Registro = () => {
             navigate('/dashboard')
         })
         .catch(error => {
-            console.log(error);
+            console.log(error)
         })
+        */
+
+        try {
+            const { data }  = await clienteAxios.post( '/admin', valores )
+            console.log(data.message)
+        } catch(error) {
+            console.log(error)
+        }
        
     }
 
@@ -51,7 +61,8 @@ export const Registro = () => {
                     password: ''
                 }}
                 onSubmit={ (values, {resetForm}) => {
-                    handleSubmit(values);
+                    // handleSubmit(values);
+                    // submitForm(values);
                     resetForm();
                 }}
                 validationSchema={nuevoRegistro}

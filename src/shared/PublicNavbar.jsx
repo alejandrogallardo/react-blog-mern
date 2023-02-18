@@ -1,6 +1,10 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom"
+import useAuth from '../hooks/useAuth'
 
 export const PublicNavbar = () => {
+    
+    const { auth, cargando } = useAuth();
+
     return (
         // <main>
         //     <nav>
@@ -29,11 +33,26 @@ export const PublicNavbar = () => {
                     <li>
                         <Link to="/contacto" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contacto</Link>
                     </li>
+                    { !auth._id ? (
+                    <>
                     <li>
                         <Link to="/login" className="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</Link>
                     </li>
                     <li>
                         <Link to="/registro" className="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Registro</Link>
+                    </li>
+                    </>
+                    ) :
+                    <li>
+                        <button 
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded"
+                        >
+                            Logout
+                        </button>
+                    </li>
+                    }
+                    <li>
+                        <Link to="/dashboard" className="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Dash</Link>
                     </li>
                 </ul>
             </div>
